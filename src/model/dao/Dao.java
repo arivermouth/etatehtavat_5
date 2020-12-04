@@ -137,6 +137,7 @@ public class Dao {
         		if(rs.isBeforeFirst()){ 
         			rs.next();
         			asiakas = new Asiakas();        			
+        			asiakas.setAsiakas_id(rs.getInt(1));
         			asiakas.setEtunimi(rs.getString(2));
 					asiakas.setSukunimi(rs.getString(3));
 					asiakas.setPuhelin(rs.getString(4));	
@@ -152,10 +153,11 @@ public class Dao {
 	
 	public boolean muutaAsiakas(Asiakas asiakas, int asiakas_id){
 		boolean paluuArvo=true;
-		sql="UPDATE asiakkaat SET etunimi=?, sukunimi=?, puhelin=?, sposti=? WHERE asiakas_id=?";						  
+		sql="UPDATE asiakkaat SET asiakas_id=?, etunimi=?, sukunimi=?, puhelin=?, sposti=? WHERE asiakas_id=?";						  
 		try {
 			con = yhdista();
 			stmtPrep=con.prepareStatement(sql); 
+			stmtPrep.setInt(1, asiakas_id);
 			stmtPrep.setString(2, asiakas.getEtunimi());
 			stmtPrep.setString(3, asiakas.getSukunimi());
 			stmtPrep.setString(4, asiakas.getPuhelin());

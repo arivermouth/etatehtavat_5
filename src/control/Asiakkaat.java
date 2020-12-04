@@ -37,6 +37,7 @@ public class Asiakkaat extends HttpServlet {
 			int asiakas_id = Integer.parseInt(pathInfo.replace("/haeyksi/", "")); //poistetaan polusta "/haeyksi/", jäljelle jää asiakas_id		
 			Asiakas asiakas = dao.etsiAsiakas(asiakas_id);
 			JSONObject JSON = new JSONObject();
+			JSON.put("asiakas_id", asiakas.getAsiakas_id());
 			JSON.put("etunimi", asiakas.getEtunimi());
 			JSON.put("sukunimi", asiakas.getSukunimi());
 			JSON.put("puhelin", asiakas.getPuhelin());
