@@ -171,4 +171,22 @@ public class Dao {
 		}				
 		return paluuArvo;
 	}
+	
+	public boolean poistaKaikkiAsiakkaat(String pwd){ //Oikeassa elämässä tiedot ensisijaisesti merkitään poistetuksi.
+		boolean paluuArvo=true;
+		if(pwd!="nimda") {
+			return false;
+		}			
+		sql="DELETE FROM asiakkaat";						  
+		try {
+			con = yhdista();
+			stmtPrep=con.prepareStatement(sql);						
+			stmtPrep.executeUpdate();
+	        con.close();
+		} catch (Exception e) {				
+			e.printStackTrace();
+			paluuArvo=false;
+		}				
+		return paluuArvo;
+	}
 }
