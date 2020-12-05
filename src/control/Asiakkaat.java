@@ -36,14 +36,18 @@ public class Asiakkaat extends HttpServlet {
 		}else if(pathInfo.indexOf("haeyksi")!=-1) {		//polussa on sana "haeyksi", eli haetaan yhden asiakkaan tiedot
 			int asiakas_id = Integer.parseInt(pathInfo.replace("/haeyksi/", "")); //poistetaan polusta "/haeyksi/", jäljelle jää asiakas_id		
 			Asiakas asiakas = dao.etsiAsiakas(asiakas_id);
-			JSONObject JSON = new JSONObject();
-			JSON.put("asiakas_id", asiakas.getAsiakas_id());
-			JSON.put("etunimi", asiakas.getEtunimi());
-			JSON.put("sukunimi", asiakas.getSukunimi());
-			JSON.put("puhelin", asiakas.getPuhelin());
-			JSON.put("sposti", asiakas.getSposti());	
-			strJSON = JSON.toString();		
-		}else{ //Haetaan hakusanan mukaiset autot
+			if (asiakas==null) {
+				strJSON = "{}";
+			} else {
+				JSONObject JSON = new JSONObject();
+				JSON.put("asiakas_id", asiakas.getAsiakas_id());
+				JSON.put("etunimi", asiakas.getEtunimi());
+				JSON.put("sukunimi", asiakas.getSukunimi());
+				JSON.put("puhelin", asiakas.getPuhelin());
+				JSON.put("sposti", asiakas.getSposti());	
+				strJSON = JSON.toString();
+			}	
+		}else{ //Haetaan hakusanan mukaiset asiakkaat
 			String hakusana = pathInfo.replace("/", "");
 			asiakkaat = dao.listaaKaikki(hakusana);
 			strJSON = new JSONObject().put("asiakkaat", asiakkaat).toString();	
@@ -74,8 +78,7 @@ public class Asiakkaat extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Asiakkaat.doPut()");
 		JSONObject jsonObj = new JsonStrToObj().convert(request); //Muutetaan kutsun mukana tuleva json-string json-objektiksi			
-		String strasiakas_id = jsonObj.getString("vanhaasiakas_id");
-		int vanhaasiakas_id = Integer.parseInt(strasiakas_id);
+		int vanhaasiakas_id = jsonObj.getInt("vanhaasiakas_id");
 		Asiakas asiakas = new Asiakas();
 		asiakas.setEtunimi(jsonObj.getString("etunimi"));
 		asiakas.setSukunimi(jsonObj.getString("sukunimi"));
