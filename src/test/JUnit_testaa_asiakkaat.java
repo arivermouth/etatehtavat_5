@@ -48,7 +48,7 @@ class JUnit_testaa_asiakkaat {
 		muutettava.setSukunimi("Mainio");
 		muutettava.setPuhelin("1234");
 		muutettava.setSposti("m.m@gmail.com");
-		dao.muutaAsiakas(muutettava, 1);	
+		dao.muutaAsiakas(muutettava);	
 		assertEquals(1, dao.etsiAsiakas(1).getAsiakas_id());
 		assertEquals("Manu", dao.etsiAsiakas(1).getEtunimi());
 		assertEquals("Mainio", dao.etsiAsiakas(1).getSukunimi());
